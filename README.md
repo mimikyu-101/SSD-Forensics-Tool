@@ -6,7 +6,7 @@
     <!-- <img src="images/logo.png" alt="Logo" width="80" height="80"> -->
   </a>
 
-  <h1 align="center">Cross-Platform Live SSD Forensics and TRIM Recovery Tool</h1>
+  <h1 align="center">Cross-Platform Live SSD Forensics and Recovery Tool</h1>
 
   <p align="center">
     A powerful and user-friendly tool for carving files from raw device data, supporting both Linux and Windows platforms. Designed for digital forensic investigators (DFIs) and data recovery professionals, this tool allows you to recover files based on their magic bytes signatures while optionally displaying hex data for found artifacts.
@@ -201,7 +201,6 @@ This tool is intended for legal and ethical use only. Ensure you have proper aut
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-<!-- CONTACT -->
 ## Contact
 
 Project Link: [https://github.com/mimikyu-101/SSD-Forensics_Tool](https://github.com/mimikyu-101/SSD-Forensics_Tool)
