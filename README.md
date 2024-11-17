@@ -10,7 +10,8 @@
 
   <p align="center">
     A powerful and user-friendly tool for carving files from raw device data, supporting both Linux and Windows platforms. Designed for digital forensic investigators (DFIs) and data recovery professionals, this tool allows you to recover files based on their magic bytes signatures while optionally displaying hex data for found artifacts.
-
+  </p>
+</div>
 
 ---
 
