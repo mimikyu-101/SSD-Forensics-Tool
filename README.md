@@ -206,5 +206,9 @@ This tool is intended for legal and ethical use only. Ensure you have proper aut
 
 Project Link: [https://github.com/mimikyu-101/SSD-Forensics_Tool](https://github.com/mimikyu-101/SSD-Forensics_Tool)
 
+---
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+Happy Recovering! 🚀
 
