@@ -4,6 +4,22 @@ import argparse
 import platform
 import ctypes
 import time
+import subprocess
+
+
+def print_colored(text, color="white"):
+    """
+    Print text in the specified color (if terminal supports it).
+    """
+    colors = {
+        "red": "\033[91m",
+        "green": "\033[92m",
+        "yellow": "\033[93m",
+        "blue": "\033[94m",
+        "white": "\033[97m",
+    }
+    reset = "\033[0m"
+    print(f"{colors.get(color, colors['white'])}{text}{reset}")
 
 
 def check_admin():
@@ -12,17 +28,90 @@ def check_admin():
     """
     if platform.system() == "Linux":
         if os.geteuid() != 0:
-            print("This application requires admin privileges. Please run with sudo.")
+            print_colored("This application requires admin privileges. Please run with sudo.", color="red")
             sys.exit(1)
     elif platform.system() == "Windows":
         try:
             is_admin = ctypes.windll.shell32.IsUserAnAdmin()
             if not is_admin:
-                print("This application requires admin privileges. Please run as Administrator.")
+                print_colored("This application requires admin privileges. Please run as Administrator.", color="red")
                 sys.exit(1)
         except Exception as e:
-            print(f"Error checking admin privileges: {e}")
+            print_colored(f"Error checking admin privileges: {e}", color="red")
             sys.exit(1)
+
+
+def check_trim_status(device_path):
+    if platform.system() == "Linux":
+        try:
+            result = subprocess.run(["hdparm", "-I", device_path], capture_output=True, text=True)
+            if "Data Set Management TRIM supported" in result.stdout:
+                return "TRIM is supported by the SSD."
+            else:
+                return "TRIM is not supported by the SSD."
+        except Exception as e:
+            return f"Error checking TRIM status: {e}"
+
+    elif platform.system() == "Windows":
+        try:
+            result = subprocess.run(["fsutil", "behavior", "query", "DisableDeleteNotify"], capture_output=True, text=True)
+            if "0" in result.stdout:
+                return "TRIM is enabled on this system."
+            elif "1" in result.stdout:
+                return "TRIM is disabled on this system."
+            else:
+                return "Unable to determine TRIM status."
+        except Exception as e:
+            return f"Error checking TRIM status: {e}"
+    else:
+        return "TRIM check is not supported on this platform."
+    
+
+def get_ssd_details(device_path):
+    if platform.system() == "Linux":
+        try:
+            result = subprocess.run(["hdparm", "-I", device_path], capture_output=True, text=True)
+            lines = result.stdout.splitlines()
+            ssd_info = [line.strip() for line in lines if any(keyword in line for keyword in ["Model Number", "Firmware Revision"])]
+            if ssd_info:
+                return f"SSD detected:\n" + "\n".join(ssd_info) + "\nWarning: Garbage collection may be active."
+            else:
+                return "No SSD detected, or information is unavailable."
+        except Exception as e:
+            return f"Error fetching SSD details: {e}"
+
+    elif platform.system() == "Windows":
+        try:
+            result = subprocess.run(["wmic", "diskdrive", "get", "model,firmwareRevision,mediaType"], capture_output=True, text=True)
+            if "SSD" in result.stdout:
+                return f"SSD detected:\n{result.stdout.strip()}\nWarning: Garbage collection may be active."
+            else:
+                return "No SSD detected, or information is unavailable."
+        except Exception as e:
+            return f"Error fetching SSD details: {e}"
+    else:
+        return "Garbage collection analysis is not supported on this platform."
+    
+
+def assess_recovery_feasibility(device_path):
+    """
+    Assess the feasibility of data recovery based on SSD features.
+    :param device_path: Path to the device (Linux: /dev/sda, Windows: \\.\PhysicalDriveX)
+    :return: Feasibility score (1-10) and recommendation
+    """
+    trim_status = check_trim_status(device_path)
+    gc_details = get_ssd_details(device_path)
+    
+    score = 10  # Start with high recovery feasibility
+
+    if "TRIM is enabled" in trim_status:
+        score -= 5  # Major impact if TRIM is enabled
+
+    if "Garbage collection may be active" in gc_details:
+        score -= 3  # Moderate impact for GC
+
+    recommendation = "Data recovery is feasible." if score > 5 else "Data recovery may have limited success."
+    return score, recommendation
 
 
 def read_raw_data(device_path, chunk_size=1024*1024):
@@ -56,7 +145,7 @@ def read_raw_data_windows(device_path, chunk_size=1024*1024):
             while chunk := device.read(chunk_size):
                 yield chunk
     except Exception as e:
-        print(f"Error reading device: {e}")
+        print_colored(f"Error reading device: {e}", color="red")
         sys.exit(1)
 
 
@@ -80,7 +169,7 @@ def carve_files(device_path, output_dir, chunk_size=1024*1024, file_types=None, 
                 # File found, save it
                 file_offset = offset + pos
                 save_file(device_path, file_offset, file_type, output_dir, show_hex)
-                print(f"Recovered {file_type} at offset {file_offset}\n")
+                print_colored(f"Recovered {file_type} at offset {file_offset}\n", color="green")
         offset += chunk_size
 
 
@@ -111,11 +200,16 @@ def save_file(device_path, start_offset, file_type, output_dir, show_hex=False, 
         if is_valid_file:
             with open(output_file, 'wb') as out_file:
                 out_file.write(data_chunk)
-            print(f"Saved {file_type} to {output_file}")
-            # time.sleep(2)
+            print_colored(f"Saved {file_type} to {output_file}", color="green")
 
 
 if __name__ == "__main__":
+    print("""
+ __   __   __      ___  __   __   ___       __     __   __                __     ___  __              __   ___  __   __        ___  __         ___  __   __       
+/__` /__` |  \    |__  /  \ |__) |__  |\ | /__` | /  ` /__`     /\  |\ | |  \     |  |__) |  |\/|    |__) |__  /  ` /  \ \  / |__  |__) \ /     |  /  \ /  \ |    
+.__/ .__/ |__/    |    \__/ |  \ |___ | \| .__/ | \__, .__/    /~~\ | \| |__/     |  |  \ |  |  |    |  \ |___ \__, \__/  \/  |___ |  \  |      |  \__/ \__/ |___ 
+          """)
+
     # Check admin privileges
     check_admin()
 
@@ -153,6 +247,21 @@ if __name__ == "__main__":
     parser.add_argument("--show_hex", action="store_true", help="Display hex data of found artifacts")
 
     args = parser.parse_args()
+
+    # Check SSD features
+    print_colored("\nChecking SSD Features...\n", color="yellow")
+    print_colored(check_trim_status(args.device), color="yellow")
+    print_colored(get_ssd_details(args.device), color="yellow")
+
+    print_colored("\nWARNING: Recovery on SSDs with TRIM or aggressive Garbage Collection may have limited success.", color="red")
+
+    # Analyze recovery feasibility
+    print_colored("\nAnalyzing recovery feasibilty...", color="yellow")
+    score, recommendation = assess_recovery_feasibility(args.device)
+    print_colored(f"Feasibility Score: {score}/10", color="yellow")
+    print_colored(f"Recommendation: {recommendation}\n\n", color="yellow")
+
+    time.sleep(5)
 
     # Run the carving process
     carve_files(args.device, args.output, args.chunk_size, args.extensions, args.show_hex)
