@@ -15,7 +15,7 @@
 ---
 
 
-### 🎯 Features
+## 🎯 Features
 
 - **Cross-Platform Compatibility**: Works seamlessly on both **Linux** and **Windows**.
 - **File Recovery**: Recovers files using pre-defined magic bytes for common file types.
