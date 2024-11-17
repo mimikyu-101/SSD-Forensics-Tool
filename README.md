@@ -3,13 +3,12 @@
 <br />
 <div align="center">
   <a href="https://github.com/mimikyu-101/SSD-Forensics_Tool">
-    <!-- <img src="images/logo.png" alt="Logo" width="80" height="80"> -->
   </a>
 
-  <h1 align="center">Cross-Platform Live SSD Forensics and Recovery Tool</h1>
+  <h1 align="center">Cross-Platform Live SSD Forensics and Data Recovery Tool</h1>
 
   <p align="center">
-    A powerful and user-friendly tool for carving files from raw device data, supporting both Linux and Windows platforms. Designed for digital forensic investigators (DFIs) and data recovery professionals, this tool allows you to recover files based on their magic bytes signatures while optionally displaying hex data for found artifacts.
+    A powerful and user-friendly tool for carving files from raw device data, supporting both Linux and Windows platforms. This tool is designed for efficient data recovery from raw storage devices, supporting cross-platform functionality on both Windows and Linux. It can recover files based on their magic bytes and provides detailed analysis of TRIM and Garbage Collection (GC) statuses for SSDs, helping users assess the feasibility of data recovery.
   </p>
 </div>
 
@@ -20,6 +19,8 @@
 
 - **Cross-Platform Compatibility**: Works seamlessly on both **Linux** and **Windows**.
 - **File Recovery**: Recovers files using pre-defined magic bytes for common file types.
+- **TRIM Detection**: Identifies if TRIM is enabled on the SSD, which can impact recovery.
+- **Garbage Collection Detection**: Fetches SSD model and firmware details.
 - **Hex Viewer**: Displays hex data for identified files (optional).
 - **Customizable Options**: Supports flexible chunk sizes and targeted file recovery based on extensions.
 - **Admin Privilege Check**: Ensures proper permissions are in place for device access.
@@ -95,11 +96,11 @@ python3 recovery_tool.py --device <DEVICE_PATH> --output <OUTPUT_DIR> [OPTIONS]
 | --output  | Directory to save the recovered files.                          |
 
 ### Optional Arguments
-| Argumnent    | Description                                                       |
-|--------------|-------------------------------------------------------------------|
-| --chunk_size | Chunk size for reading data (default: `1MB`).                     |
-| --extensions | List of file types/extensions to recover (e.g., `JPEG PNG PDF`).  |
-| --show_hex   | Display the hex dump of found files during recovery..             |
+| Argumnent    | Description                                                           |
+|--------------|-----------------------------------------------------------------------|
+| --chunk_size | Chunk size for reading data (default: `1MB`).                         |
+| --extensions | List of file types/extensions to recover (e.g., `JPEG` `PNG` `PDF`).  |
+| --show_hex   | Display the hex dump of found files during recovery..                 |
 
 
 ### Example
@@ -162,6 +163,16 @@ sudo python3 recovery_tool.py --device /dev/sda --output ./recovered_files
 - **Magic Bytes Search:** Scans for predefined signatures to identify files.
 - **File Recovery:** Extracts and saves files with proper validation.
 - **Hex Viewer _(optional)_:** Displays the first 256 bytes of identified files in hex and ASCII format.
+
+---
+
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+## ⛓ Known Limitations
+- **TRIM Impact**: If TRIM is enabled, data blocks may be marked as reusable, reducing recovery chances.
+- **Active Garbage Collection**: SSD firmware may erase unused data, limiting recovery success.
 
 ---
 
