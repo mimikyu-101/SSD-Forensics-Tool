@@ -190,9 +190,9 @@ This tool is intended for legal and ethical use only. Ensure you have proper aut
 ## Authors
 
 - Abdullah Nadeem [@mimikyu-101](https://www.github.com/mimikyu-101)
-- Muhammad Shaayan [@](https://github.com/M-Shaayan)
+- Muhammad Shaayan [@M-Shaayan](https://github.com/M-Shaayan))
 - Rizwanullah [@](https://github.com/)
-- Fatima Farooq [@](https://github.com/)
+- Fatima Farooq [@Fatima-295](https://github.com/Fatima-295))
 
 
 ---
