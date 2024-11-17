@@ -92,7 +92,7 @@ cd SSD-Forensics-Tool
 
 ### Command Syntax
 ```bash
-python3 SSD_Recover.py --device <DEVICE_PATH> --output <OUTPUT_DIR> [OPTIONS]
+python3 recovery_tool.py --device <DEVICE_PATH> --output <OUTPUT_DIR> [OPTIONS]
 ```
 
 ### Required Arguments
