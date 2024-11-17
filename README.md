@@ -10,17 +10,7 @@
 
   <p align="center">
     A powerful and user-friendly tool for carving files from raw device data, supporting both Linux and Windows platforms. Designed for digital forensic investigators (DFIs) and data recovery professionals, this tool allows you to recover files based on their magic bytes signatures while optionally displaying hex data for found artifacts.
-    <br />
-    <a href="https://github.com/mimikyu-101/SSD-Forensics_Tool"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/mimikyu-101/SSD-Forensics_Tool">View Demo</a>
-    ·
-    <a href="https://github.com/mimikyu-101/SSD-Forensics_Tool/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
-    ·
-    <a href="https://github.com/mimikyu-101/SSD-Forensics_Tool/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
-  </p>
-</div>
+
 
 ---
 
