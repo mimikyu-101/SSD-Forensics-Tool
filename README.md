@@ -185,6 +185,8 @@ This tool is intended for legal and ethical use only. Ensure you have proper aut
 
 ---
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 
 ## 📞 Contact
 
