@@ -186,23 +186,6 @@ This tool is intended for legal and ethical use only. Ensure you have proper aut
 ---
 
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-## 👨‍💻 Authors
-
-- Abdullah Nadeem [@mimikyu-101](https://www.github.com/mimikyu-101)
-- Muhammad Shaayan [@M-Shaayan](https://github.com/M-Shaayan))
-- Rizwanullah [@](https://github.com/)
-- Fatima Farooq [@Fatima-295](https://github.com/Fatima-295))
-
-
----
-
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 ## 📞 Contact
 
 Project Link: [https://github.com/mimikyu-101/SSD-Forensics_Tool](https://github.com/mimikyu-101/SSD-Forensics_Tool)
