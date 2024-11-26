@@ -177,7 +177,7 @@ def save_file(device_path, start_offset, file_type, output_dir, show_hex=False, 
     """
     Save the carved file data to a file.
     """
-    output_file = os.path.join(output_dir, f"{file_type}_{start_offset}.recovered")
+    output_file = os.path.join(output_dir, f"{file_type}_{start_offset}.{file_type}")
     is_valid_file = True
 
     with open(device_path, 'rb') as device:
