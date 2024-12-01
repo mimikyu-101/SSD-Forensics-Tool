@@ -46,7 +46,7 @@ The following file types are supported for recovery:
 | **EXE**   | `4D 5A`                             |
 | **BMP**   | `42 4D`                             |
 | **AVI**   | `52 49 46 46`                       |
-| **DOCX**  | `50 4B 03 04` (with XML validation) |
+| **DOCX**  | `50 4B 03 04`                       |
 | **XLSX**  | `50 4B 03 04`                       |
 | **PPTX**  | `50 4B 03 04`                       |
 | **DOC**   | `D0 CF 11 E0 A1 B1 1A E1`           |
